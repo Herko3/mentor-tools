@@ -1,0 +1,36 @@
+###
+GET http://localhost:8080/api/students
+Accept: application/json
+
+### valid
+POST http://localhost:8080/api/students
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.org",
+  "githubUserName": "Johnny",
+  "details": "none"
+}
+
+### invalid
+POST http://localhost:8080/api/students
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "",
+  "githubUserName": "Johnny",
+  "details": "none"
+}
+
+###
+PUT http://localhost:8080/api/students/1
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "",
+  "githubUserName": "Johnny325",
+  "details": "works"
+}
