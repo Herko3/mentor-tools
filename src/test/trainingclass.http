@@ -1,0 +1,55 @@
+###
+GET http://localhost:8080/api/training_classes
+Accept: application/json
+
+###
+POST http://localhost:8080/api/training_classes
+Content-Type: application/json
+
+{
+  "name": "asd",
+  "startTime": "2020-10-01T08:00:00",
+  "endTime": "2021-04-06T15:00:00"
+}
+
+###
+DELETE http://localhost:8080/api/training_classes/2
+Content-Type: application/json
+
+### valid
+PUT http://localhost:8080/api/training_classes/3
+Content-Type: application/json
+
+{
+  "name": "Újratervezés 1.0",
+  "startTime": "2020-10-10T08:08:00",
+  "endTime": "2021-04-10T15:00:00"
+}
+
+### invalid update start is after end
+PUT http://localhost:8080/api/training_classes/3
+Content-Type: application/json
+
+{
+"name": "Újratervezés 3.0",
+"startTime": "2021-10-10T08:08:00"
+}
+
+### invalid endTime
+PUT http://localhost:8080/api/training_classes/3
+Content-Type: application/json
+
+{
+  "name": "Újratervezés 4.0",
+  "endTime": "2019-10-10T08:08:00"
+}
+
+### invalid
+PUT http://localhost:8080/api/training_classes/3
+Content-Type: application/json
+
+{
+  "name": "Újratervezés 4.0",
+  "startTime": "2021-10-10T08:08:00",
+  "endTime": "2019-10-10T08:08:00"
+}
