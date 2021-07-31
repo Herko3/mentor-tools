@@ -1,0 +1,24 @@
+### all modules
+GET http://localhost:8080/api/modules
+Accept: application/json
+
+### lessons of module
+GET http://localhost:8080/api/modules/2/lessons
+Accept: application/json
+
+###
+POST http://localhost:8080/api/modules/2/lessons
+Content-Type: application/json
+
+{
+  "name": "Verzió kezelés",
+  "url": "verzio.training360.com"
+}
+
+###
+DELETE http://localhost:8080/api/modules/2/lessons/2
+Accept: application/json
+
+###
+GET http://localhost:8080/api/modules/2/lessons/1
+Accept: application/json
