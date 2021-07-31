@@ -1,11 +1,12 @@
 package mentortools.trainingclass;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import mentortools.registration.Registration;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +24,11 @@ public class TrainingClass {
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "trainingClass")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Registration> registrations;
 
     public TrainingClass(String name, LocalDateTime startTime, LocalDateTime endTime) {
         this.name = name;
@@ -47,5 +53,13 @@ public class TrainingClass {
             }
             setEndTime(end);
         }
+    }
+
+    public void addRegistration(Registration registration){
+        if(registrations == null){
+            registrations = new HashSet<>();
+        }
+        registrations.add(registration);
+        registration.setTrainingClass(this);
     }
 }

@@ -1,0 +1,23 @@
+GET http://localhost:8080/api/training_classes/6/registrations
+Accept: application/json
+
+###
+POST http://localhost:8080/api/training_classes/1/registrations
+Content-Type: application/json
+
+{
+  "studentId": 1
+}
+
+###
+GET http://localhost:8080/api/students/6/registrations
+Accept: application/json
+
+###
+PUT http://localhost:8080/api/training_classes/1/registrations
+Content-Type: application/json
+
+{
+  "studentId": 3,
+  "status": "EXITED"
+}

@@ -1,12 +1,11 @@
 package mentortools.trainingclass;
 
 import lombok.AllArgsConstructor;
+import mentortools.registration.Registration;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,5 +47,11 @@ public class TrainingClassService {
 
     private TrainingClass getById(long id) {
         return repository.findById(id).orElseThrow(() -> new TrainingClassNotFoundException(id));
+    }
+
+    public TrainingClassDto addRegistration(long id, Registration registration){
+        TrainingClass trainingClass = getById(id);
+        trainingClass.addRegistration(registration);
+        return mapper.map(trainingClass,TrainingClassDto.class);
     }
 }
