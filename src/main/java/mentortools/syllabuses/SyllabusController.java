@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import mentortools.modules.AddModuleCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,5 +53,20 @@ public class SyllabusController {
     @ApiResponse(responseCode = "404", description = "Syllabus not found")
     public void deleteSyllabus(@PathVariable("id") long id) {
         service.deleteSyllabus(id);
+    }
+
+    @PostMapping("/{id}/modules")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "adds a module to the syllabus")
+    @ApiResponse(responseCode = "404", description = "Syllabus not found")
+    public SyllabusWithModulesDto addModule(@PathVariable ("id") long id, @Valid @RequestBody AddModuleCommand command){
+        return service.addModule(id, command);
+    }
+
+    @GetMapping("/{id}/modules")
+    @Operation(summary = "gives back the modules for a syllabus")
+    @ApiResponse(responseCode = "404", description = "Syllabus not found")
+    public SyllabusWithModulesDto getSyllabusWithModules(@PathVariable ("id") long id){
+        return service.getSyllabusWithModules(id);
     }
 }

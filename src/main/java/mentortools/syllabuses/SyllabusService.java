@@ -1,6 +1,10 @@
 package mentortools.syllabuses;
 
 import lombok.AllArgsConstructor;
+import mentortools.modules.AddModuleCommand;
+import mentortools.modules.Module;
+import mentortools.modules.ModuleNotFoundException;
+import mentortools.modules.ModuleRepository;
 import mentortools.trainingclass.TrainingClassRepository;
 import mentortools.trainingclass.TrainingClassService;
 import org.modelmapper.ModelMapper;
@@ -15,6 +19,7 @@ public class SyllabusService {
 
     private SyllabusRepository repository;
     private TrainingClassRepository trainingClassRepository;
+    private ModuleRepository moduleRepository;
 
     private ModelMapper mapper;
 
@@ -50,5 +55,17 @@ public class SyllabusService {
         trainingClassRepository.findAllBySyllabus_Id(id).stream()
                 .forEach(t -> t.setSyllabus(null));
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public SyllabusWithModulesDto addModule(long id, AddModuleCommand command) {
+        Syllabus syllabus = findById(id);
+        Module module = moduleRepository.findById(command.getModuleId()).orElseThrow(()->new ModuleNotFoundException(command.getModuleId()));
+        syllabus.addModule(module);
+        return mapper.map(syllabus,SyllabusWithModulesDto.class);
+    }
+
+    public SyllabusWithModulesDto getSyllabusWithModules(long id) {
+        return mapper.map(findById(id),SyllabusWithModulesDto.class);
     }
 }

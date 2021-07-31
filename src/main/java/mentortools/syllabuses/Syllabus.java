@@ -3,6 +3,7 @@ package mentortools.syllabuses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mentortools.modules.Module;
 import mentortools.trainingclass.TrainingClass;
 
 import javax.persistence.*;
@@ -33,7 +34,21 @@ public class Syllabus {
         trainingClass.setSyllabus(this);
     }
 
+    @ManyToMany
+    @JoinTable(name = "SYL_MOD",
+    joinColumns = @JoinColumn(name = "syl_id"),
+    inverseJoinColumns = @JoinColumn(name = "mod_id"))
+    public List<Module> modules;
+
     public Syllabus(String name) {
         this.name = name;
+    }
+
+    public void addModule(Module module) {
+        if(modules == null){
+            modules = new ArrayList<>();
+        }
+
+        modules.add(module);
     }
 }

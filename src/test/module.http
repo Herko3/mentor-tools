@@ -1,0 +1,40 @@
+###
+GET http://localhost:8080/api/modules
+Accept: application/json
+
+###
+POST http://localhost:8080/api/modules
+Content-Type: application/json
+
+{
+  "name": "Git",
+  "url": "github.com"
+}
+
+###
+GET http://localhost:8080/api/modules/1
+Accept: application/json
+
+###
+PUT http://localhost:8080/api/modules/1
+Content-Type: application/json
+
+{
+  "url": "git.com"
+}
+
+###
+POST http://localhost:8080/api/syllabuses/3/modules
+Content-Type: application/json
+
+{
+  "moduleId": "1"
+}
+
+###
+GET http://localhost:8080/api/syllabuses/3/modules
+Accept: application/json
+
+###
+DELETE http://localhost:8080/api/modules/1
+Accept: application/json
