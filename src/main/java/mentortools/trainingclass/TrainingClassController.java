@@ -52,4 +52,20 @@ public class TrainingClassController {
     public TrainingClassDto findById(@PathVariable("id") long id) {
         return service.findById(id);
     }
+
+    @PostMapping("/{id}/syllabuses")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "adds a syllabus to the class")
+    @ApiResponse(responseCode = "404", description = "Syllabus not found")
+    public TrainingClassDto addSyllabus(@PathVariable ("id") long id, @RequestBody AddOrUpdateSyllabusCommand command){
+        return service.addOrUpdateSyllabus(id,command);
+    }
+
+    @PutMapping("/{id}/syllabuses")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "updates the syllabus")
+    @ApiResponse(responseCode = "404", description = "Syllabus not found")
+    public TrainingClassDto updateSyllabus(@PathVariable ("id") long id, @RequestBody AddOrUpdateSyllabusCommand command){
+        return service.addOrUpdateSyllabus(id,command);
+    }
 }

@@ -1,0 +1,30 @@
+GET http://localhost:8080/api/syllabuses
+Accept: application/json
+
+### add syllabus to class
+POST http://localhost:8080/api/training_classes/1/syllabuses
+Content-Type: application/json
+
+{
+  "syllabusId": "2"
+}
+
+###
+GET http://localhost:8080/api/syllabuses/1
+Accept: application/json
+
+###
+POST http://localhost:8080/api/syllabuses
+Content-Type: application/json
+
+{
+  "name": "Syllabus"
+}
+
+###
+DELETE http://localhost:8080/api/syllabuses/2
+Accept: application/json
+
+###
+GET http://localhost:8080/api/training_classes/1
+Content-Type: application/json

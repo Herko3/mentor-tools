@@ -2,6 +2,7 @@ package mentortools.trainingclass;
 
 import lombok.*;
 import mentortools.registration.Registration;
+import mentortools.syllabuses.Syllabus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,10 @@ public class TrainingClass {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Registration> registrations;
+
+    @ManyToOne
+    @JoinColumn(name = "syllabus_id")
+    private Syllabus syllabus;
 
     public TrainingClass(String name, LocalDateTime startTime, LocalDateTime endTime) {
         this.name = name;

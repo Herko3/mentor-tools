@@ -2,6 +2,8 @@ package mentortools.trainingclass;
 
 import lombok.AllArgsConstructor;
 import mentortools.registration.Registration;
+import mentortools.syllabuses.Syllabus;
+import mentortools.syllabuses.SyllabusService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.List;
 public class TrainingClassService {
 
     private TrainingClassRepository repository;
+    private SyllabusService syllabusService;
 
     private ModelMapper mapper;
 
@@ -49,9 +52,17 @@ public class TrainingClassService {
         return repository.findById(id).orElseThrow(() -> new TrainingClassNotFoundException(id));
     }
 
-    public TrainingClassDto addRegistration(long id, Registration registration){
+    public TrainingClassDto addRegistration(long id, Registration registration) {
         TrainingClass trainingClass = getById(id);
         trainingClass.addRegistration(registration);
-        return mapper.map(trainingClass,TrainingClassDto.class);
+        return mapper.map(trainingClass, TrainingClassDto.class);
+    }
+
+    @Transactional
+    public TrainingClassDto addOrUpdateSyllabus(long id, AddOrUpdateSyllabusCommand command) {
+        TrainingClass trainingClass = getById(id);
+        Syllabus syllabus = syllabusService.findById(command.getSyllabusId());
+        syllabus.addClass(trainingClass);
+        return mapper.map(trainingClass, TrainingClassDto.class);
     }
 }

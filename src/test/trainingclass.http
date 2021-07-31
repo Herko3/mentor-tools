@@ -7,7 +7,7 @@ POST http://localhost:8080/api/training_classes
 Content-Type: application/json
 
 {
-  "name": "asd",
+  "name": "Third",
   "startTime": "2020-10-01T08:00:00",
   "endTime": "2021-04-06T15:00:00"
 }
