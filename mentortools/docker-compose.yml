@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  mentortools-mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: mentortools
+      MYSQL_USER: mentortools
+      MYSQL_PASSWORD: mentortools
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+
+  mentortools-app:
+    image: mentortools
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mentortools-mariadb
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mariadb://mentortools-mariadb/mentortools'
+    entrypoint: ['./wait-for-it.sh', '-t', '120','mentortools-mariadb:3306','--','java','org.springframework.boot.loader.JarLauncher']
