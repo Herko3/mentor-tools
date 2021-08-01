@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -56,7 +57,7 @@ public class RegistrationService {
     private void checkIfExists(long id, CreateRegistrationCommand command) {
         Registration check = registrationRepository.findRegistrationByTrainingClass_IdAndStudent_Id(id, command.getStudentId());
         if (check != null) {
-            throw new DataAlreadyExistsException("This registration is already exists");
+            throw new DataAlreadyExistsException(URI.create("registration/already-exist"), "This registration is already exists");
         }
     }
 }

@@ -7,8 +7,8 @@ import java.net.URI;
 
 public class DataAlreadyExistsException extends AbstractThrowableProblem {
 
-    public DataAlreadyExistsException(String message) {
-        super(URI.create("registration/already-exist"),
+    public DataAlreadyExistsException(URI uri, String message) {
+        super(uri,
                 "Data already exists",
                 Status.BAD_REQUEST,
                 message);
