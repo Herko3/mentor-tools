@@ -1,10 +1,12 @@
 package mentortools.students;
 
 import lombok.*;
+import mentortools.completion.LessonCompletion;
 import mentortools.registration.Registration;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -27,10 +29,15 @@ public class Student {
 
     private String details;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "student")
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "student")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Registration> registrations;
+
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "student")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<LessonCompletion> lessonCompletions;
 
     public Student(String name, String email, String githubUserName, String details) {
         this.name = name;

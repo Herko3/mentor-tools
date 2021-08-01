@@ -11,7 +11,7 @@ public class StudentNotFoundException extends AbstractThrowableProblem {
         super(URI.create("students/not-found"),
                 "not found",
                 Status.NOT_FOUND,
-                "Training Class not found with id: " + id);
+                "Student not found with id: " + id);
 
     }
 }

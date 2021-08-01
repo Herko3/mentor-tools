@@ -1,0 +1,31 @@
+GET http://localhost:8080/api/students/1/lesson-completion
+Accept: application/json
+
+###
+POST http://localhost:8080/api/students/1/lesson-completion
+Content-Type: application/json
+
+{
+  "lessonId": 1
+}
+
+###
+PUT http://localhost:8080/api/students/1/lesson-completion/2
+Content-Type: application/json
+
+{
+  "lessonId": 3,
+  "videoStatus": "COMPLETED",
+  "videoDate": "2020-10-10T08:08:00",
+  "exerciseDate": "2020-10-10T08:08:00",
+  "exerciseStatus": "COMPLETED",
+  "commitUrl": "github.com"
+}
+
+###
+DELETE http://localhost:8080/api/students/1/lesson-completion/3
+Accept: application/json
+
+###
+GET http://localhost:8080/api/students/1/lesson-completion/2
+Accept: application/json

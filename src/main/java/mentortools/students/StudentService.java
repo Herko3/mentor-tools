@@ -29,7 +29,7 @@ public class StudentService {
         return mapper.map(student, StudentDto.class);
     }
 
-    private Student getStudentById(long id) {
+    public Student getStudentById(long id) {
         return repository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
