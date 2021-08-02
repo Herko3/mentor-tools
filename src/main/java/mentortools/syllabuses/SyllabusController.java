@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/syllabuses")
 @RequiredArgsConstructor
-@Tag(name = "operations on syllabuses")
+@Tag(name = "Operations on syllabuses")
 public class SyllabusController {
 
     private final SyllabusService service;
