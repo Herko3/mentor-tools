@@ -3,10 +3,12 @@ package mentortools.lessons;
 import lombok.AllArgsConstructor;
 import mentortools.modules.Module;
 import mentortools.modules.ModuleService;
+import mentortools.trainingclass.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -29,7 +31,7 @@ public class LessonService {
     }
 
     public Lesson getLessonByIds(long id, long lessonId) {
-        return repository.findLessonByModuleIdAndId(id, lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
+        return repository.findLessonByModuleIdAndId(id, lessonId).orElseThrow(() -> new NotFoundException(URI.create("lessons/not-found"), "Lesson not found with id: " + lessonId));
     }
 
     @Transactional

@@ -2,6 +2,7 @@ package mentortools.registration;
 
 import lombok.AllArgsConstructor;
 import mentortools.students.StudentService;
+import mentortools.trainingclass.NotFoundException;
 import mentortools.trainingclass.TrainingClassService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class RegistrationService {
     public RegistrationWithStudentDto updateRegistration(long id, UpdateRegistrationCommand command) {
         Registration registration = registrationRepository.findRegistrationByTrainingClass_IdAndStudent_Id(id, command.getStudentId());
         if (registration == null) {
-            throw new RegistrationNotFoundException("No registration found for that trainingClass-student combo");
+            throw new NotFoundException(URI.create("registrations/not-found"), "Registration not found");
         }
 
         registration.setStatus(command.getStatus());

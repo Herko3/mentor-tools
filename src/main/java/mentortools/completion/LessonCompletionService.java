@@ -2,11 +2,11 @@ package mentortools.completion;
 
 import lombok.AllArgsConstructor;
 import mentortools.lessons.Lesson;
-import mentortools.lessons.LessonNotFoundException;
 import mentortools.lessons.LessonRepository;
 import mentortools.registration.DataAlreadyExistsException;
 import mentortools.students.Student;
 import mentortools.students.StudentService;
+import mentortools.trainingclass.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +36,14 @@ public class LessonCompletionService {
     }
 
     private LessonCompletion getLessonCompletionByIds(long id, long compId) {
-        return repository.findByStudent_IdAndId(id, compId).orElseThrow(() -> new LessonCompletionNotFoundException(compId));
+        return repository.findByStudent_IdAndId(id, compId).orElseThrow(() -> new NotFoundException(URI.create("lesson-completions/not-found"), "Lesson completion not found with id: " + compId));
     }
 
     @Transactional
     public LessonCompletionDto createCompletion(long id, CreateLessonCompletionCommand command) {
         checkIfExists(id, command.getLessonId());
         Student student = studentService.getStudentById(id);
-        Lesson lesson = lessonRepository.findById(command.getLessonId()).orElseThrow(() -> new LessonNotFoundException(command.getLessonId()));
+        Lesson lesson = getLessonById(command.getLessonId());
         LessonCompletion completion = new LessonCompletion(student, lesson);
         repository.save(completion);
         return mapper.map(completion, LessonCompletionDto.class);
@@ -57,7 +57,7 @@ public class LessonCompletionService {
         if (updateLessonId != null && !Objects.equals(completion.getLesson().getId(), updateLessonId)) {
             checkIfExists(id, updateLessonId);
 
-            Lesson lesson = lessonRepository.findById(updateLessonId).orElseThrow(() -> new LessonNotFoundException(command.getLessonId()));
+            Lesson lesson = getLessonById(updateLessonId);
             completion.setLesson(lesson);
         }
 
@@ -75,5 +75,9 @@ public class LessonCompletionService {
         if (completion != null) {
             throw new DataAlreadyExistsException(URI.create("students/completion-already-exists"), "this completion is already exists");
         }
+    }
+
+    private Lesson getLessonById(long id) {
+        return lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(URI.create("lesson-completions/not-found"), "Lesson completion not found with id: " + id));
     }
 }

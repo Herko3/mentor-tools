@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -49,7 +50,7 @@ public class TrainingClassService {
     }
 
     private TrainingClass getById(long id) {
-        return repository.findById(id).orElseThrow(() -> new TrainingClassNotFoundException(id));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(URI.create("/training-class/not-found"), "Training Class not found with id: " + id));
     }
 
     public TrainingClassDto addRegistration(long id, Registration registration) {

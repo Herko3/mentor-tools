@@ -3,14 +3,14 @@ package mentortools.syllabuses;
 import lombok.AllArgsConstructor;
 import mentortools.modules.AddModuleCommand;
 import mentortools.modules.Module;
-import mentortools.modules.ModuleNotFoundException;
 import mentortools.modules.ModuleRepository;
+import mentortools.trainingclass.NotFoundException;
 import mentortools.trainingclass.TrainingClassRepository;
-import mentortools.trainingclass.TrainingClassService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -34,7 +34,7 @@ public class SyllabusService {
     }
 
     public Syllabus findById(long id) {
-        return repository.findById(id).orElseThrow(() -> new SyllabusNotFoundException(id));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(URI.create("syllabuses/not-found"), "syllabus not found with id: " + id));
     }
 
     public SyllabusDto createSyllabus(CreateSyllabusCommand command) {
@@ -60,7 +60,7 @@ public class SyllabusService {
     @Transactional
     public SyllabusWithModulesDto addModule(long id, AddModuleCommand command) {
         Syllabus syllabus = findById(id);
-        Module module = moduleRepository.findById(command.getModuleId()).orElseThrow(()->new ModuleNotFoundException(command.getModuleId()));
+        Module module = moduleRepository.findById(command.getModuleId()).orElseThrow(()->new NotFoundException(URI.create("modules/not-found"), "Module not found with id: " + command.getModuleId()));
         syllabus.addModule(module);
         return mapper.map(syllabus,SyllabusWithModulesDto.class);
     }

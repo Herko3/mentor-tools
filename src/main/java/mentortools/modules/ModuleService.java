@@ -1,10 +1,12 @@
 package mentortools.modules;
 
 import lombok.AllArgsConstructor;
+import mentortools.trainingclass.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -26,7 +28,7 @@ public class ModuleService {
     }
 
     public Module getModule(long id) {
-        return repository.findById(id).orElseThrow(() -> new ModuleNotFoundException(id));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(URI.create("modules/not-found"), "Module not found with id: " + id));
     }
 
     public ModuleDto createModule(CreateModuleCommand command) {

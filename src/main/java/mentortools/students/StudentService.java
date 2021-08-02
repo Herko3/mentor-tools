@@ -3,10 +3,12 @@ package mentortools.students;
 import lombok.AllArgsConstructor;
 import mentortools.registration.CreateRegistrationCommand;
 import mentortools.registration.Registration;
+import mentortools.trainingclass.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class StudentService {
     }
 
     public Student getStudentById(long id) {
-        return repository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(URI.create("students/not-found"), "Student not found with id: " + id));
     }
 
     public StudentDto createStudent(CreateStudentCommand command) {
