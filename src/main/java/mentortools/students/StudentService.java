@@ -1,7 +1,6 @@
 package mentortools.students;
 
 import lombok.AllArgsConstructor;
-import mentortools.registration.CreateRegistrationCommand;
 import mentortools.registration.Registration;
 import mentortools.trainingclass.NotFoundException;
 import org.modelmapper.ModelMapper;
