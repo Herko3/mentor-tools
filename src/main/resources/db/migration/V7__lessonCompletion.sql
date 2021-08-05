@@ -8,5 +8,7 @@ create table lesson_completions
     exercise_status varchar(20) not null,
     exercise_date   datetime,
     commit_url      varchar(255),
-    primary key (id)
+    primary key (id),
+    foreign key (student_id) references students(id) on delete cascade,
+    foreign key (lesson_id) references lessons(id) on delete cascade
 )
